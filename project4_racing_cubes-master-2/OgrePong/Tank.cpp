@@ -574,7 +574,7 @@ void Tank::Think(const Ogre::Real& mTime)
     mObj2->pitch(Ogre::Radian(0.6f * mTime));
     mObj3->roll(Ogre::Radian(0.5f * mTime));
 	mObj4->translate(mTime * Ogre::Vector3(-1, 0,0));
-	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	int k = mWorld->GlblTime; //Ogre::ControllerManager::getSingleton().getElapsedTime();
 	int c = k%4;//for selecting frame storages
 	if(k%10==0){
 		/*
@@ -591,7 +591,8 @@ void Tank::Think(const Ogre::Real& mTime)
 		 Ogre::PixelFormat::PF_R8G8B8,
 	     Ogre::TextureUsage::TU_RENDERTARGET);
 	Ogre::RenderTexture *renderTexture_ai1 = ai1_tex->getBuffer()->getRenderTarget();
-	renderTexture_ai1->addViewport(mCamera_ai1->getCamera(),0);
+	//renderTexture_ai1->addViewport(mCamera_ai1->getCamera(),0);//for predition
+	renderTexture_ai1->addViewport(mCamera->getCamera(),0);//for training
 	renderTexture_ai1->getViewport(0)->setClearEveryFrame(true);
 	renderTexture_ai1->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
 	renderTexture_ai1->getViewport(0)->setOverlaysEnabled(true);
@@ -776,29 +777,7 @@ void Tank::Think(const Ogre::Real& mTime)
 	outtxt_ai1.close();
 	delete [] infile_ai1;
 
-	/*control*/
-
-	int control;
-	if(k*10%5==0){
-		control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
-
-	}
-	else if(k*10%5==1)
-	{
-		control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
-	}
-	else if(k*10%5==2)
-	{
-		control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
-	}
-	else if(k*10%5==3)
-	{
-		control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
-	}
-	else if(k*10%5==4)
-	{
-		control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
-	}
+	
 	
 
 	/*
@@ -1231,74 +1210,429 @@ void Tank::Think(const Ogre::Real& mTime)
     fclose(outptr_ai3);
 	outtxt_ai3.close();
 	delete [] infile_ai3;
-
-
-
-
 	int SwitchMode =1;
 
 	}
+
+		/*control*/
+		if(mWorld->Mode==0){
+		int control;
+		int control2;
+		int control3;
+
+		if(k*10%5==0){
+			//calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control2 = prediction(mWorld->ai2, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control3 = prediction(mWorld->ai3, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			if(control==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;	
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+		}
+			else if(control==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;	
+			}
+		}
+		else if(k*10%5==1)
+		{
+			//calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control2 = prediction(mWorld->ai2, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control3 = prediction(mWorld->ai3, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+
+			if(control==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+		}
+		else if(k*10%5==2)
+		{
+			//calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control2 = prediction(mWorld->ai2, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control3 = prediction(mWorld->ai3, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			if(control==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+			///////////////////////
+			if(control2==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control2==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control2==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control2==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+			if(control3==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control3==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control3==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control3==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+		}
+		else if(k*10%5==3)
+		{
+			//calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control2 = prediction(mWorld->ai2, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control3 = prediction(mWorld->ai3, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			if(control==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+			if(control2==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control2==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control2==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control2==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+			if(control3==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control3==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control3==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control3==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+		}
+		else if(k*10%5==4)
+		{
+			//calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control2 = prediction(mWorld->ai2, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			control3 = prediction(mWorld->ai3, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			if(control==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+			if(control2==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control2==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control2==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control2==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+			if(control3==0){
+				mWorld->U_u+=1.0f;
+				mWorld->AI_0_u+=1.0f;
+				mWorld->AI_1_u+=1.0f;
+			}
+			else if(control3==1){
+				mWorld->U_v+=1.0f;
+				mWorld->AI_0_v+=1.0f;
+				mWorld->AI_1_v+=1.0f;
+			}
+			else if(control3==2){
+				mWorld->U_v-=1.0f;
+				mWorld->AI_0_v-=1.0f;
+				mWorld->AI_1_v-=1.0f;
+			}
+			else if(control3==3){
+				mWorld->U_u-=1.0f;
+				mWorld->AI_0_u-=1.0f;
+				mWorld->AI_1_u-=1.0f;
+			}
+		}
+	}
+	else if(mWorld->Mode==1){
+		//read input parameters
+
+		if(k*10%5==0){
+			calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+		}
+		else if(k*10%5==1){
+		    calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+		}
+		else if(k*10%5==2){
+			calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+		}
+		else if(k*10%5==3){
+		    calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+		}
+		else if(k*10%5==4){
+			calculate_loss(mWorld->lab, mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+		}
+	}
+	if(k==10){
+		//wrtie parameters as outputs
+		string w1ID = "Trained_w1_readable.txt";
+		ofstream outtxt_ai2( w1ID );
+		string bintxtID_w1 = "Trained_w1_binary";
+		ofstream fout_w1( bintxtID_w1 );
+		//for fopen, fwrite
+		//char *outfile_w1 = new char[bintxtID_w1.length() + 1]; 
+		//strcpy(outfile_w1, bintxtID_w1.c_str());
+		//FILE* outptr_w1 = fopen(outfile_w1, "w");
+		
+		for(int j=0; j< 6400; j++)
+		{
+			for(int k=0; k< 65; k++)
+			{
+				//write in text file 
+				//fwrite(&mWorld->w1[k][j], sizeof(float), sizeof(mWorld->w1[k][j]), outptr_w1);
+				fout_w1.write((char*)&mWorld->w1[j][k],sizeof(float));
+			    outtxt_ai2 << mWorld->w1[j][k] << flush;
+			    outtxt_ai2 << ", "<< flush;
+				
+			}
+			outtxt_ai2 << endl;
+			fout_w1 << endl;
+			//fputc('\n',outptr_w1);
+		}
+		outtxt_ai2.close();
+		fout_w1.close();
+		//fclose(outptr_w1);
+
+		string w2ID = "Trained_w2_readable.txt";
+		ofstream outtxt_w2( w2ID );
+		string bintxtID_w2 = "Trained_w2_binary";
+		ofstream fout_w2( bintxtID_w2 );
+		for(int j=0; j< 65; j++)
+		{
+			for(int k=0; k< 4; k++)
+			{
+				fout_w2.write((char*)&mWorld->w2[j][k],sizeof(float));
+				outtxt_w2 << mWorld->w2[j][k] << flush;
+			    outtxt_w2 << ", "<< flush;
+			}
+			outtxt_w2 << endl;
+			fout_w2 << endl;
+		}
+		outtxt_w2.close();
+		fout_w2.close();
+
+		string b1ID = "Trained_b1_readable.txt";
+		ofstream outtxt_b1( b1ID );
+		string bintxtID_b1 = "Trained_b1_binary";
+		ofstream fout_b1( bintxtID_b1 );
+		for(int k=0; k< 65; k++)
+		{
+			fout_b1.write((char*)&mWorld->b1[k],sizeof(float));
+			outtxt_b1 << mWorld->b1[k] << flush;
+			outtxt_b1 << ", "<< flush;
+			
+		}
+		outtxt_b1.close();
+		fout_b1.close();
+
+		string b2ID = "Trained_b2_readable.txt";
+		ofstream outtxt_b2( b2ID );
+		string bintxtID_b2 = "Trained_b2_binary";
+		ofstream fout_b2( bintxtID_b2 );
+		for(int k=0; k< 4; k++)
+		{
+			fout_b2.write((char*)&mWorld->b2[k],sizeof(float));
+			outtxt_b2 << mWorld->b2[k] << flush;
+			outtxt_b2 << ", "<< flush;
+			outtxt_b2 << endl;
+		}		
+		outtxt_b2.close();
+		fout_b2.close();
+	}
 }
 
-float
-Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5])
+void
+Tank::calculate_loss(int lab[6][5], int x[6][6401], float (&w1)[6401][66], float (&w2)[66][5], float *b1, float *b2)
 {
 				//# FEEDFORWARD
 				//# reshape array in order to easily calculate dot product
 				//w1*x + b1
-				float z_1[6][66];
+				
 				for(int i=0;i<5;i++)//for the output
 				{
 					for(int j=0; j< 65; j++)
 					{
-						z_1[i][j]=0.0f;
+						mWorld->z_1[i][j]=0.0f;
 						for(int k=0; k< 6400; k++)
 						{
-							z_1[i][j] += x[i][k]*w1[k][j];
+							mWorld->z_1[i][j] += x[i][k]*(w1[k][j]);
 						}
-						z_1[i][j]+= b1[j];
+						mWorld->z_1[i][j]+= b1[j];
 					}
 				}
 				//y_ij = sigmoid(z_1_ij)
+				
 				tf = new tensorflow(mWorld);
-				float y[6][66];
+				
 				for(int i=0; i<5;i++){
 					for(int j=0; j<65; j++)
 					{
-						y[i][j]=tf->sigmoid(z_1[i][j]);
+						mWorld->y[i][j]=tf->sigmoid(mWorld->z_1[i][j]);
 					}
 				}
-				float z[6][5];
+				
 				//z = w2*y + b2
 				for(int i=0;i<5;i++)//for the output
 				{
 					for(int j=0; j< 4; j++)
 					{
-						z[i][j]=0.0f;
+						mWorld->z[i][j]=0.0f;
 						for(int k=0; k< 65; k++)
 						{
-							z[i][j] += w2[k][j]*y[i][k];
+							mWorld->z[i][j] += w2[k][j]*mWorld->y[i][k];
 						}
-						z[i][j]+= b2[j];
+						mWorld->z[i][j]+= b2[j];
 					}
 				}
-				float p[6][5];
-				float M[6];
+				
 				for(int i=0;i<5;i++)//for the output
 				{
-					M[i]=INT_FAST16_MIN;
+					mWorld->M[i]=INT_FAST16_MIN;
 					for(int j=0; j< 4; j++){
-						if(z[i][j]>M[i])
-							M[i]=z[i][j];
+						if(mWorld->z[i][j]>mWorld->M[i])
+							mWorld->M[i]=mWorld->z[i][j];
 					}
 					
 				}
-				float softsum[6];
+				
 				for(int i=0;i<5;i++)//for the output
 				{
 					for(int j=0; j< 4; j++)
 					{
-						softsum[i]+= (z[i][j]-M[i]);
+						mWorld->softsum[i]+= (mWorld->z[i][j]-mWorld->M[i]);
 					}
 					
 				}
@@ -1307,15 +1641,16 @@ Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 				{
 					for(int j=0; j< 4; j++)
 					{
-						p[i][j]= tf->softmax(z[i][j]-M[i],softsum[i]);
+						mWorld->p[i][j]= tf->softmax(mWorld->z[i][j]-mWorld->M[i],mWorld->softsum[i]);
 					}
 				}
+				
 				//# calculate loss
 				//loss = np.zeros(batch_size)
-				float loss[6];
+				
 				for(int i=0;i<5;i++)//initialize the loss
 				{
-					loss[i]=0.0f;
+					mWorld->loss[i]=0.0f;
 				}
 				//for j, (a, b) in enumerate(zip(p.T, label_mini_batches[i])):
 					//loss[j] = cross_entropy_loss(a, b)
@@ -1325,93 +1660,94 @@ Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 				{
 					for(int j=0; j< 4; j++)
 					{
-						loss[i] += ((-1)*log(p[i][j])*lab[i][j]);
+						mWorld->loss[i] += ((-1)*log(mWorld->p[i][j])*lab[i][j]);
 					}
 				}
-
+				
 				//batch_loss = sum(loss) / batch_size
 				float batch_loss = 0.0f;
 				for(int i=0;i<5;i++)
 				{
-					batch_loss+=loss[i];	
+					batch_loss+=mWorld->loss[i];	
 				}
 				batch_loss/=5;
 
 				//BACKPROPAGATION
 				//output layer (z) gradient
 				//dloss_dz = p - label_mini_batches[i].T
-				float dloss_dz[6][5];
+				
 				for(int i=0;i<5;i++)
 				{
 					for(int j=0; j< 4; j++)
 					{
-						dloss_dz[i][j] = p[i][j]-lab[i][j];
+						mWorld->dloss_dz[i][j] = mWorld->p[i][j]-lab[i][j];
 					}
 				}
 				//dloss_dw2 = dloss_dz*y.T
-				/*float y_t[66][6];
+				
 				for(int i=0;i<65;i++)//for the output
 				{
 					for(int j=0; j< 5; j++)
 					{
-						y_t[i][j]=y[j][i];
+						mWorld->y_t[i][j]=mWorld->y[j][i];
 					}
-				}*/
+				}
 				
-				float dloss_dw2[66][5];
+				
 				for(int i=0;i<65;i++)
 				{
 					for(int j=0; j< 4; j++)
 					{
-						dloss_dw2[i][j]=0.0f;
+						mWorld->dloss_dw2[i][j]=0.0f;
 						for(int k=0; k< 5; k++)
 						{
-							dloss_dw2[i][j] += dloss_dz[k][j]*y[k][i];
+							mWorld->dloss_dw2[i][j] += mWorld->dloss_dz[k][j]*mWorld->y[k][i];
 						}
 					}
 				}
 				// hidden layer (y) gradient
 				//dloss_dy = w2.T*dloss_dz
-				float dloss_dy[6][66];
+				
 				for(int i=0;i<5;i++)
 				{
 					for(int j=0; j< 65; j++)
 					{
-						dloss_dy[i][j]=0.0f;
+						mWorld->dloss_dy[i][j]=0.0f;
 						for(int k=0; k< 5; k++)
 						{
-							dloss_dw2[i][j] += dloss_dz[k][i]*w2[j][k];
+							mWorld->dloss_dy[i][j] +=mWorld->dloss_dz[k][i]*w2[j][k];
 						}
 					}
 				}
 				//dy_da = sigmoid_derivative(y)
-				float dy_da[6][66];
+				
 				for(int i=0;i<5;i++)
 				{
 					for(int j=0; j< 65; j++)
 					{
-						dy_da[i][j]=tf->sigmoid_derivative(y[i][j]);
+						mWorld->dy_da[i][j]=tf->sigmoid_derivative(mWorld->y[i][j]);
 					}
 				}
 				//dloss_da = dloss_dy * dy_da
-				float dloss_da[66][6];
+				
 				for(int i=0;i<65;i++)
 				{
 					for(int j=0; j< 5; j++)
 					{
-						dloss_da[j][i] = dloss_dy[j][i]*dy_da[j][i];
+						mWorld->dloss_da[j][i] = mWorld->dloss_dy[j][i]*mWorld->dy_da[j][i];
 					}
 				}
+				
 				//dloss_dw1 = np.dot(dloss_da, x.T)
-				float dloss_dw1[6401][66];
+				
 				for(int i=0;i<6400;i++)
 				{
 					for(int j=0; j< 65; j++)
 					{
-						dloss_dw1[i][j]=0.0f;
+						mWorld->dloss_dw1[i][j]=0.0f;
 						for(int k=0; k< 5; k++)
 						{
-							dloss_dw1[i][j] += dloss_da[j][k]*x[k][i];
+							mWorld->dloss_dw1[i][j] += mWorld->dloss_da[j][k]*x[k][i];
 						}
 					}
 				}
@@ -1421,7 +1757,7 @@ Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 				{
 					for(int j=0; j< 65; j++)
 					{
-						w1[i][j]-=(dloss_dw1[i][j]*0.1);
+						w1[i][j]-=(mWorld->dloss_dw1[i][j]*0.1f);
 					}
 				}
 				//w2 -= dloss_dw2 * learning_rate
@@ -1429,40 +1765,41 @@ Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 				{
 					for(int j=0; j< 5; j++)
 					{
-						w2[i][j]-=(dloss_dw2[i][j]*0.1);
+						w2[i][j]-=(mWorld->dloss_dw2[i][j]*0.1f);
 					}
 				}
 				// perform bias update
 				//b1 -= sum(dloss_da, axis=1).reshape(sizeof[hidden layer], 1) * learning_rate
-				float sum_dloss_da[66];
+				
 				for(int i=0;i<65;i++)
 				{
 					for(int j=0; j< 5; j++)
 					{
-						sum_dloss_da[i]+=(dloss_da[i][j]);
+						mWorld->sum_dloss_da[i]+=(mWorld->dloss_da[i][j]);
 					}
 				}
+				
 				for(int i=0;i<65;i++)
 				{
-				    b1[i]-=(sum_dloss_da[i]*0.1);
+				    b1[i]-=(mWorld->sum_dloss_da[i]*0.1);
 				}
 				//b2 -= sum(dloss_dz, axis=1).reshape(sizeof[output layer], 1) * learning_rate
-				float sum_dloss_dz[5];
+				
 				for(int i=0;i<5;i++)
 				{
 					for(int j=0; j<4; j++)
 					{
-						sum_dloss_dz[i]+=(dloss_dz[i][j]);
+						mWorld->sum_dloss_dz[i]+=(mWorld->dloss_dz[i][j]);
 					}
 				}
 				for(int i=0;i<4;i++)
 				{
-				    b1[i]-=(sum_dloss_dz[i]*0.1);
+				    b2[i]-=(mWorld->sum_dloss_dz[i]*0.1);
 				}
 
 	
 
-	return 0.0f;
+
 }
 int Tank::prediction(int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5])
 {
@@ -1540,7 +1877,7 @@ int Tank::prediction(int x[6][6401], float w1[6401][66], float w2[66][5], float 
 						if(p[4][j]>Max)
 							tmp=j;
 					}
-	return 1/*tmp*/;
+	return tmp;
 }
 
 
@@ -1565,17 +1902,9 @@ Tank::createUserTank(void)
 	 //mWorld->mHumanPlayer=mTankNode;
 	/* DEBUGGING PURPOSES */
 	mTankNode->showBoundingBox(false);
-
 	mAABB = &tankEntity->getWorldBoundingBox();
-
 	//mWorld->SceneManager()->getSceneNode("U");
-	
-	
-	
-	
-	
 	//->getRootSceneNode()->getChild("U");
-
 }
 
 

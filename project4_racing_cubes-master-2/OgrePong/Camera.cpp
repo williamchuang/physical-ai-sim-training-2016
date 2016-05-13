@@ -36,7 +36,7 @@ PongCamera::Think(const Ogre::Real& mTime)
 void
 PongCamera::capture(){
 	//for recording 
-	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	int k = mWorld->GlblTime; //Ogre::ControllerManager::getSingleton().getElapsedTime();
 	if(k%10==0){
 	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().createManual(
          "MainRenderTarget", 

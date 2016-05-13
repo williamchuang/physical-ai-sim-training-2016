@@ -34,12 +34,88 @@
 #include "PongManager.h"
 #include "WorldManager.h"
 #include <vector>
+#include "VirtualClock.h"
 
-
-World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank)   : mSceneManager(sceneManager), mInputHandler(input), mTank(tank)
+ #define DBOUT( s )            \
+{                             \
+   std::wostringstream os_;    \
+   os_ << s;                   \
+   OutputDebugStringW( os_.str().c_str() );  \
+}
+World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank, VirtualClock *mVT)   : mSceneManager(sceneManager), mInputHandler(input), mTank(tank), mClock(mVT)
 {
+	
+	state = 0;//pause
 	ailevel = 0;
 	Switch = 0;
+	GlblTime = mClock->report();
+	Mode = 1;//0 is prediction; 1 is training, and this value is only could be changed by designer manually 
+	w1ID = "Trained_w1_binary";
+	w2ID = "Trained_w2_binary";
+	b1ID = "Trained_b1_binary";
+	b2ID = "Trained_b2_binary";
+
+	//The following are the setup (initial conditions) for the first time training
+	/*w1ID = "w1_readable.txt";
+	w2ID = "w2_readable.txt";
+	b1ID = "b1_readable.txt";
+	b2ID = "b2_readable.txt";*/
+	
+	if(Mode==1)//read in the input parameters
+	{
+		ifstream fin_w1;
+		fin_w1.open(w1ID,ios::binary);
+		for (int i = 0; i < 6400; i++)
+		{
+			// iterate over pixels in scanline
+			for (int j = 0; j < 65; j++)
+			{
+				float my_int2_ai3;
+				fin_w1.read((char*)&my_int2_ai3,sizeof(float));
+				w1[i][j]=my_int2_ai3;
+				//if(i%100==0)DBOUT(" my_int2_ai3: " <<  my_int2_ai3);
+			}
+		}
+		fin_w1.close();
+		ifstream fin_w2;
+
+		fin_w2.open(w2ID,ios::binary);
+		for (int i = 0; i < 65; i++)
+		{
+			// iterate over pixels in scanline
+			for (int j = 0; j < 4; j++)
+			{
+				float my_int2_w2;
+				fin_w2.read((char*)&my_int2_w2,sizeof(float));
+				w2[i][j]=my_int2_w2;
+				//if(i%100==0)DBOUT(" my_int2_w2: " <<  my_int2_ai3);
+			}
+		}
+		fin_w2.close();
+		ifstream fin_b1;
+
+		fin_b1.open(b1ID,ios::binary);
+		for (int i = 0; i < 65; i++)
+		{
+			// iterate over pixels in scanline
+				float my_int2_b1;
+				fin_b1.read((char*)&my_int2_b1,sizeof(float));
+				b1[i]=my_int2_b1;
+				//if(i%100==0)DBOUT(" my_int2_w2: " <<  my_int2_ai3);
+		}
+		fin_b1.close();
+		ifstream fin_b2;
+		fin_b2.open(b2ID,ios::binary);
+		for (int i = 0; i < 4; i++)
+		{
+			// iterate over pixels in scanline
+				float my_int2_b2;
+				fin_b2.read((char*)&my_int2_b2,sizeof(float));
+				b2[i]=my_int2_b2;
+				//if(i%100==0)DBOUT(" my_int2_w2: " <<  my_int2_ai3);
+		}
+		fin_b2.close();
+	}
 	PROJECTILE_SPEED_V=100;
 	PROJECTILE_SPEED_H=100;
 	mScore = 0;
@@ -47,14 +123,8 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank) 
 	//mAIScore = 0;
 	//mUserScore = 0;
 	initialStates();
-	
-
-
-
-
 	mUser = mUserRedBrick;
 	mAIPlayer = mAIRedBrick;
-	
 	//mOverlay = Ogre::OverlayManager::getSingleton().getByName("Score");
 	//mOverlay->show();
 	mBorder_4 = new Border_(mSceneManager, Borde_dim_0);
@@ -179,7 +249,7 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank) 
     SPEED_COEFFICIENT_AI_1 = 10.0;
     SPEED_COEFFICIENT_AI_2 = 10.0;
 
-	
+	if(Mode==0){
 	if(ailevel<1){
 		string w1ID = "w1_readable.txt";
 		ofstream outtxt_ai2( w1ID );
@@ -203,8 +273,8 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank) 
 		{
 			for(int k=0; k< 65; k++)
 			{
-				w1[k][j]= 1.0f* ((double) rand() / (RAND_MAX));
-				outtxt_w2 << w1[k][j] << flush;
+				w2[k][j]= 1.0f* ((double) rand() / (RAND_MAX));
+				outtxt_w2 << w2[k][j] << flush;
 			    outtxt_w2 << ", "<< flush;
 			}
 			outtxt_w2 << endl;
@@ -235,12 +305,64 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank) 
 
 	}
 	else if(ailevel==1){
+		ifstream fin_w1;
+		fin_w1.open(w1ID,ios::binary);
+		for (int i = 0; i < 6400; i++)
+		{
+			// iterate over pixels in scanline
+			for (int j = 0; j < 65; j++)
+			{
+				float my_int2_ai3;
+				fin_w1.read((char*)&my_int2_ai3,sizeof(float));
+				w1[i][j]=my_int2_ai3;
+				//if(i%100==0)DBOUT(" my_int2_ai3: " <<  my_int2_ai3);
+			}
+		}
+		fin_w1.close();
+
+		ifstream fin_w2;
+		fin_w2.open(w2ID,ios::binary);
+		for (int i = 0; i < 65; i++)
+		{
+			// iterate over pixels in scanline
+			for (int j = 0; j < 4; j++)
+			{
+				float my_int2_w2;
+				fin_w2.read((char*)&my_int2_w2,sizeof(float));
+				w2[i][j]=my_int2_w2;
+				//if(i%100==0)DBOUT(" my_int2_w2: " <<  my_int2_ai3);
+			}
+		}
+		fin_w2.close();
+
+		ifstream fin_b1;
+		fin_b1.open(b1ID,ios::binary);
+		for (int i = 0; i < 65; i++)
+		{
+			// iterate over pixels in scanline
+				float my_int2_b1;
+				fin_b1.read((char*)&my_int2_b1,sizeof(float));
+				b1[i]=my_int2_b1;
+				//if(i%100==0)DBOUT(" my_int2_w2: " <<  my_int2_ai3);
+		}
+		fin_b1.close();
+		ifstream fin_b2;
+		fin_b2.open(b2ID,ios::binary);
+		for (int i = 0; i < 4; i++)
+		{
+			// iterate over pixels in scanline
+				float my_int2_b2;
+				fin_b2.read((char*)&my_int2_b2,sizeof(float));
+				b2[i]=my_int2_b2;
+				//if(i%100==0)DBOUT(" my_int2_w2: " <<  my_int2_ai3);
+		}
+		fin_b2.close();
 
 	}
 	else if(ailevel==2){
 
 	}
-	
+	}
 	
 }
 //flying_or_diving
@@ -315,7 +437,15 @@ Ogre::Matrix3 World::Orientation(Ogre::Vector3 xBasis, Ogre::Vector3 yBasis, Ogr
 
 void World::Think(const Ogre::Real& mTime)
 {
-	
+	GlblTime = mClock->report();
+	for(int j=0; j< 5; j++)
+	{
+		for(int k=0; k< 4; k++)
+		{
+			lab[j][k]=0;
+		}
+			
+	}
 	FILE * pFile;
 	char buffer [100];
    pFile = fopen ("w1.txt" , "r");
@@ -378,7 +508,7 @@ void World::Think(const Ogre::Real& mTime)
 	Ogre::Vector3 position = mTank->mMainNode->getPosition();
 	float u = 2*asin(position.z/1000);
 	Ogre::Vector3 N;
-    float ftime =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	float ftime = mClock->report(); //Ogre::ControllerManager::getSingleton().getElapsedTime();
     u=ftime;
 	U_u=-ftime/SPEED_COEFFICIENT;// ORIGINALLY -ftime/10
     AI_0_u=-ftime/SPEED_COEFFICIENT_AI_0;// ORIGINALLY -ftime/10
@@ -390,14 +520,14 @@ void World::Think(const Ogre::Real& mTime)
     //For Debug use:
     //"AItank0" will make User cube Designer
 
-	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
-	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u1, U_v)*10);
+	mTank->SceneManager()->getSceneNode("U")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
+	mTank->SceneManager()->getSceneNode("U")->translate(Normal(u1, U_v)*10);
 	//mTank->SceneManager()->getSceneNode("U")->translate(Binormal(u1, U_v)*U_v);
-	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
+	mTank->SceneManager()->getSceneNode("U")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
 	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
-	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u2, AI_0_v)*11);
-	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
+	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
+	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
+	mTank->SceneManager()->getSceneNode("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
 	u+=5;
 	mTank->SceneManager()->getSceneNode("AItank2")->setPosition(1000*cos(u3)+1000*cos(u3/2)*cos(u3)*(AI_1_v),1000*sin(u3)+1000*cos(u3/2)*sin(u3)*(AI_1_v),1000*sin(u3/2)*(AI_1_v));
 	mTank->SceneManager()->getSceneNode("AItank2")->translate(Normal(u3, AI_1_v)*11);
@@ -488,7 +618,7 @@ void World::Think(const Ogre::Real& mTime)
 	t=mTime;
 
 
-	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	int k = mClock->report();//Ogre::ControllerManager::getSingleton().getElapsedTime();
 	int cd = 185-k;
 	if (cd<5){
 		Ogre::OverlayManager& om = Ogre::OverlayManager::getSingleton();
@@ -659,7 +789,357 @@ void World::Think(const Ogre::Real& mTime)
         }
 
 	}
-	
+	if(mInputHandler->IsKeyDown(OIS::KC_8))
+	{
+		mClock->pause();
+	}
+	if(mInputHandler->IsKeyDown(OIS::KC_9))
+	{
+		mClock->start();
+	}
+	if(mInputHandler->IsKeyDown(OIS::KC_0))
+	{
+		mClock->reset();
+	}
+	int elp = mClock->report(); //Ogre::ControllerManager::getSingleton().getElapsedTime();
+	if(elp*10%5==0){
+		if (mInputHandler->IsKeyDown(OIS::KC_I)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_L)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][1]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_J)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][2]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_K)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][3]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else {
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+	}
+	else if(elp*10%5==1){
+		if (mInputHandler->IsKeyDown(OIS::KC_I)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_L)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][1]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_J)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][2]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_K)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][3]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else {
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+	}
+	else if(elp*10%5==2){
+		if (mInputHandler->IsKeyDown(OIS::KC_I)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+				if (mInputHandler->IsKeyDown(OIS::KC_L)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][1]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_J)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][2]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_K)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][3]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else {
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+	}
+	else if(elp*10%5==3){
+		if (mInputHandler->IsKeyDown(OIS::KC_I)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+	    else if (mInputHandler->IsKeyDown(OIS::KC_L)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][1]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_J)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][2]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_K)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][3]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else {
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+	}
+	else if(elp*10%5==4){
+		if (mInputHandler->IsKeyDown(OIS::KC_I)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_L)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][1]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if (mInputHandler->IsKeyDown(OIS::KC_J)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][2]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else if(mInputHandler->IsKeyDown(OIS::KC_K)){
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][3]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+		else {
+			for(int i=0;i<4;i++)
+			{
+				if(i==0)
+				{
+					lab[0][0]=1;
+				}
+				else
+				{
+					lab[0][i]=0;
+				}
+			}
+		}
+	}
+
+
+
 
 }
 

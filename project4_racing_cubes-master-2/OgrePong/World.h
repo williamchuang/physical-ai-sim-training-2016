@@ -3,7 +3,7 @@
 
 #include "Tank.h"
 #include <time.h>
-
+#include "VirtualClock.h"
 // Forward delcarations of Ogre classes.  Note the Ogre namespace!
 namespace Ogre {
     class SceneNode;
@@ -25,26 +25,41 @@ class InputHandler;
 class Tank;
 class ProjectileManager;
 class Border_;
-
+class VirtualClock;
 class AIManager;
 
 class World
 {
 public:
-
+	//Global time
+	float GlblTime;
+	int state;
 	//neural network
 	int ailevel;
-	int ai1frame0[81][81];
-	int ai1frame1[81][81];
-	int ai1frame2[81][81];
-	int ai1frame3[81][81];
-	int ai1frame4[81][81];
+	float dloss_dw1[6401][66];
+	float sum_dloss_dz[5];
+	float sum_dloss_da[66];
+	float dloss_da[66][6];
+	float dy_da[6][66];
+	float dloss_dy[6][66];
+	float dloss_dw2[66][5];
+	float y_t[66][6];
+	float dloss_dz[6][5];
+	float p[6][5];
+	float M[6];
+	float z[6][5];
+	float z_1[6][66];
+	float y[6][66];
+	float softsum[6];
+	float loss[6];
+	string w1ID;
+	string w2ID;
+	string b1ID;
+	string b2ID;
 	int ai1[6][6401];
 	int ai2[6][6401];
 	int ai3[6][6401];
-	float ai1lab[6][5];
-	float ai2lab[6][5];
-	float ai3lab[6][5];
+	int lab[6][5];
 	float x[6][6401]; 
 	float w1[6401][66]; 
 	float w2[66][5]; 
@@ -73,7 +88,8 @@ public:
 	Ogre::Vector3 World::Binormal(float u, float v);
 	Ogre::Matrix3 World::Orientation(Ogre::Vector3 xBasis, Ogre::Vector3 yBasis, Ogre::Vector3 zBasis);
 	int Switch;
-	World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank);
+	int Mode;
+	World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank, VirtualClock *mVT);
 	~World();
 	MovingObject *mObj1;
     MovingObject *mObj2;
@@ -185,7 +201,7 @@ protected:
 	
 	Ogre::SceneManager *mSceneManager;
 	InputHandler *mInputHandler;
-	
+	VirtualClock *mClock;
 	Tank *mTank;
 	
 	

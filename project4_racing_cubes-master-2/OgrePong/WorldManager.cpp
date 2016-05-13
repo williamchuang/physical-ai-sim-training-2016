@@ -913,7 +913,7 @@ void WorldManager::updateScore() {
 	char time[25];
 	//sprintf(score, "AI\nPlayer's\nScore:\n%i", mAIScore);
 	//te->setCaption(score);
-	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	int k = mWorld->GlblTime;//Ogre::ControllerManager::getSingleton().getElapsedTime();
 	int cd = 180 -k;
 	sprintf(score, "Human\nUser's\nScore:\n%i", mUserScore);
 	sprintf(time, "ElapsedTime:\n%i", k);
