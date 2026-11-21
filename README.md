@@ -43,6 +43,41 @@ a surface with one side: half a lap later the bot is on the "other" face, upside
 down to an outside observer, so the controller must work in the strip's local
 frame (across, up, forward) instead of a fixed world frame.
 
+## 2016 in context
+
+The project began in February–March 2016; its first commits date from April, and
+the work ran through September. Public milestones around it, for orientation:
+
+- 2015: DeepDriving (Princeton) trains a driving network inside the TORCS racing game.
+- April 2016: NVIDIA's end-to-end network learns steering from camera images of real
+  driving, tested in simulation and on a car; OpenAI releases Gym.
+- August 2016: "Playing for Data" (TU Darmstadt, Intel Labs) labels frames from
+  Grand Theft Auto V to train vision models.
+- December 2016: OpenAI Universe trains agents on games and applications.
+- February 2017: Microsoft AirSim, a drone and car simulator built on Unreal Engine.
+- May 2017: NVIDIA announces the Isaac robot simulator, built on video-game and
+  graphics technology.
+- June 2017: the Transformer architecture is published; June 2018: the first GPT.
+- March 2018: NVIDIA DRIVE Constellation, simulation for testing self-driving cars.
+
+The team did not know of the 2015 and April 2016 work above at the time. Neural
+networks were already trained on GPUs, but computer vision was far younger than
+today, and the Transformer and GPT did not yet exist. As far as William H. Chuang,
+Enrique Gonzalez and Prof. David Galles knew in 2016, earlier neural-network work had
+not joined the two fields this project brought together: training models, and
+building games with graphics and physics engines.
+
+William H. Chuang had attended the Bay Area deep learning meetup he recalls as the
+oldest and largest since its first meeting, before 2016, and later a second one. Few
+in software took neural networks seriously then; many engineers he met saw them as
+black boxes without a future. In 2016 he brought up, in discussions at these meetups,
+the idea of training bots in game environments, and later the project he was working
+on. As he recalls, most attention there went to chatbots rather than to robots,
+vehicles or anything physical, and the engineers he spoke with, among them at least
+two or three from NVIDIA, were not yet convinced that a game engine could serve as a
+training ground. About a year later, NVIDIA introduced its Isaac robot simulator,
+built on video-game and graphics technology.
+
 ## Variation 1: the restored 2016 simulation
 
 The bot cube rides on the strip. Its camera image goes through the 2016 network,
