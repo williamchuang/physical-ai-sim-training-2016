@@ -16,7 +16,7 @@ self-driving vehicles trained in simulation (VR) and judged by what they do ther
 
 The project grew out of an idea William H. Chuang brought to the course in 2016,
 and it became real through the work of the whole team, Enrique Gonzalez and
-David Galles, to whom he remains grateful. At the time, the team knew of no
+Prof. David Galles, to whom he remains grateful. At the time, the team knew of no
 comparable work; it was new to them, and it is shared here in that spirit.
 
 ![A trained bot (blue) on the Möbius strip, with coins ahead](docs/demo.png)
@@ -171,7 +171,7 @@ assistant, keeping the same libraries, and added the free-flight variation.
 
 ## Credits
 
-2016 authors: William H. Chuang, Enrique Gonzalez and David Galles.
+2016 authors: William H. Chuang, Enrique Gonzalez and Prof. David Galles.
 
 The DejaVu Sans font in `media/fonts/` has its own license (`media/fonts/LICENSE-DejaVu.txt`).
 Everything else: MIT License, see `LICENSE`.
