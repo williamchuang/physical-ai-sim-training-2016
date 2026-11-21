@@ -1,0 +1,7 @@
+Pai/Font
+{
+    type truetype
+    source DejaVuSans.ttf
+    size 32
+    resolution 96
+}

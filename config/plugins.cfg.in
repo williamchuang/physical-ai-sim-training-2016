@@ -1,0 +1,5 @@
+# Generated into the build folder by CMake.
+PluginFolder=@OGRE_PLUGIN_DIR@
+
+Plugin=RenderSystem_GL
+Plugin=Plugin_OctreeSceneManager
