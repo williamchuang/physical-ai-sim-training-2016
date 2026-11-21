@@ -14,8 +14,10 @@ so the idea was given a game's clothes: a cube for the robot, coins for goals,
 a score for how well it does. Underneath, the subject is physical AI: robots and
 self-driving vehicles trained in simulation (VR) and judged by what they do there.
 
-The idea, and the start of the project, came from William H. Chuang. At the time
-he knew of no comparable work; it was new to him and to the team.
+The project grew out of an idea William H. Chuang brought to the course in 2016,
+and it became real through the work of the whole team, Enrique Gonzalez and
+David Galles, to whom he remains grateful. At the time, the team knew of no
+comparable work; it was new to them, and it is shared here in that spirit.
 
 ![A trained bot (blue) on the Möbius strip, with coins ahead](docs/demo.png)
 
