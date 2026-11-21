@@ -1,0 +1,16 @@
+{
+ "untrained": {
+  "coins_per_bot_min": 0.0,
+  "surface_hits_per_bot_min": 1.8671875,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 37.23354403544217,
+  "outside_fraction": 0.7281901041666666
+ },
+ "trained": {
+  "coins_per_bot_min": 4.140625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 271.4194877942403,
+  "outside_fraction": 0.00024739583333333335
+ }
+}
