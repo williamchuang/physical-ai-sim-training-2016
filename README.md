@@ -60,7 +60,7 @@ the work ran through September. Public milestones around it, for orientation:
 - June 2017: the Transformer architecture is published; June 2018: the first GPT.
 - March 2018: NVIDIA DRIVE Constellation, simulation for testing self-driving cars.
 
-The team did not know of the 2015 and April 2016 work above at the time. Neural
+The team did not know of any of the 2015 and 2016 work above at the time. Neural
 networks were already trained on GPUs, but computer vision was far younger than
 today, and the Transformer and GPT did not yet exist. As far as William H. Chuang,
 Enrique Gonzalez and Prof. David Galles knew in 2016, earlier neural-network work had
