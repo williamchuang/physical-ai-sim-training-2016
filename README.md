@@ -200,7 +200,12 @@ other ([details](free-flight/README.md#results)).
 
 ## History
 
-The commits from April to September 2016 are the original course project. The
+The commits from April to September 2016 are the original course project. In 2016 the team trained and compared camera inputs of 3×3, 8×8,
+10×10, 20×20 and 80×80 pixels; the loss and parameter records of these runs were
+committed in September 2016. Larger inputs, up to 256×256 and 1024-sized, were later
+run on local machines and shown in demos to Prof. David Galles. The code was kept as
+one program, since these runs differ only in the camera size, a single setting; the
+restored code exposes it as `sensor_width` and `sensor_height`. The
 restoration in 2026 rewrote the C++ code for clarity with the help of an AI coding
 assistant, keeping the same libraries, and added the free-flight variation.
 
