@@ -488,15 +488,20 @@ not joined the two fields this project brought together: training models, and
 building games with graphics and physics engines.
 
 William H. Chuang had attended the Bay Area deep learning meetup he recalls as the
-oldest and largest since its first meeting, before 2016, and later a second one. Few
-in software took neural networks seriously then; many engineers he met saw them as
-black boxes without a future. In 2016 he brought up, in discussions at these meetups,
-the idea of training bots in game environments, and later the project he was working
-on. As he recalls, most attention there went to chatbots rather than to robots,
-vehicles or anything physical, and the engineers he spoke with, among them at least
-two or three from NVIDIA, were not yet convinced that a game engine could serve as a
-training ground. About a year later, NVIDIA introduced its Isaac robot simulator,
-built on video-game and graphics technology.
+oldest and largest since its first meeting, before 2016, and later a second one,
+hosted by the Data Institute of the University of San Francisco at its downtown
+campus. The Data Institute was created and led by David Uminsky, now executive
+director of the University of Chicago's Data Science Institute, and its deep learning
+course was taught by Jeremy Howard, formerly president and chief scientist of Kaggle,
+and Rachel Thomas, who together founded fast.ai. Few in software took neural networks
+seriously then; many engineers he met saw them as black boxes without a future. In
+2016 he brought up, in discussions at these meetups, the idea of training bots in
+game environments, and later the project he was working on. As he recalls, most
+attention there went to chatbots rather than to robots, vehicles or anything
+physical, and the engineers he spoke with, among them at least two or three from
+NVIDIA, were not yet convinced that a game engine could serve as a training ground.
+About a year later, NVIDIA introduced its Isaac robot simulator, built on video-game
+and graphics technology.
 
 ## History
 
