@@ -61,6 +61,8 @@ Application::Application(std::string configPath) : configPath_(std::move(configP
     dataRoot_ = findDataRoot(configPath_);
     config_ = GameConfig::from(KeyValueFile::load(configPath_));
     config_.policyFile = resolve(dataRoot_, config_.policyFile);
+    config_.transformerFile = resolve(dataRoot_, config_.transformerFile);
+    if (!config_.recordFile.empty()) config_.recordFile = resolve(dataRoot_, config_.recordFile);
 }
 
 Application::~Application() {
@@ -179,7 +181,9 @@ void Application::onKey(const OIS::KeyEvent& e) {
 
 bool Application::frameStarted(const Ogre::FrameEvent& evt) {
     if (quit_ || window_->isClosed()) return false;
-    const double dt = std::min(static_cast<double>(evt.timeSinceLastFrame), kMaxFrameSeconds);
+    const double dt = config_.fixedFrameSeconds > 0
+                          ? config_.fixedFrameSeconds
+                          : std::min(static_cast<double>(evt.timeSinceLastFrame), kMaxFrameSeconds);
 
     input_->capture();
     console_->update(dt);

@@ -15,7 +15,7 @@ from pathlib import Path
 
 import torch
 
-from policy import FlightPolicy
+from policy import make_policy
 from world import World, WorldConfig
 
 WEIGHTS = {
@@ -37,12 +37,12 @@ def step_loss(terms, config: WorldConfig):
 
 
 def train(episodes: int, steps: int, window: int, lr: float, seed: int, out: Path, log_every: int = 10,
-          time_limit: float = float("inf")):
+          time_limit: float = float("inf"), kind: str = "mlp", memory: int = 8):
     """Trains, saving a checkpoint every few episodes; a second call with the same
     arguments resumes where the first one stopped. Returns True when finished."""
     torch.manual_seed(seed)
     config = WorldConfig()
-    policy = FlightPolicy()
+    policy = make_policy(kind, memory)
     optimizer = torch.optim.Adam(policy.parameters(), lr=lr)
     schedule = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, episodes)
     history, first = [], 0
@@ -67,9 +67,11 @@ def train(episodes: int, steps: int, window: int, lr: float, seed: int, out: Pat
             print(f"time limit: stopped before episode {episode}; run again to resume")
             return False
         world = World(config, seed=seed * 100003 + episode)
+        policy.reset()
         total = 0.0
         for t0 in range(0, steps, window):
             world.detach()
+            policy.detach()
             loss = 0.0
             for _ in range(window):
                 loss = loss + step_loss(world.step(policy(world.observe())), config)
@@ -104,7 +106,7 @@ def train(episodes: int, steps: int, window: int, lr: float, seed: int, out: Pat
             save_checkpoint(episode + 1)
 
     out.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"state_dict": policy.state_dict(), "weights": WEIGHTS, "config": config.__dict__}, out)
+    torch.save({"kind": kind, "memory": memory, "state_dict": policy.state_dict(), "weights": WEIGHTS, "config": config.__dict__}, out)
     out.with_suffix(".history.json").write_text(json.dumps(history, indent=1))
     checkpoint.unlink(missing_ok=True)
     return True
@@ -118,6 +120,8 @@ if __name__ == "__main__":
     p.add_argument("--lr", type=float, default=3e-3)
     p.add_argument("--seed", type=int, default=2016)
     p.add_argument("--out", type=Path, default=Path("models/flight_policy.pt"))
+    p.add_argument("--kind", choices=["mlp", "transformer"], default="mlp")
+    p.add_argument("--memory", type=int, default=8, help="observations the transformer sees")
     p.add_argument("--minutes", type=float, default=float("inf"), help="stop (resumably) after this long")
     a = p.parse_args()
-    train(a.episodes, a.steps, a.window, a.lr, a.seed, a.out, time_limit=a.minutes * 60)
+    train(a.episodes, a.steps, a.window, a.lr, a.seed, a.out, time_limit=a.minutes * 60, kind=a.kind, memory=a.memory)

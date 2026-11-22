@@ -23,17 +23,21 @@ add_library(pai_core STATIC
   src/core/MobiusStrip.cpp
   src/physics/Collision.cpp
   src/ai/Mlp.cpp
+  transformer/cpp/Transformer.cpp
   src/ai/ImitationLearner.cpp
   src/sim/Car.cpp
   src/sim/World.cpp
   src/sim/Autopilot.cpp
   src/game/Game.cpp)
-target_include_directories(pai_core PUBLIC src)
+target_include_directories(pai_core PUBLIC src transformer/cpp)
 
 if(PAI_BUILD_TESTS)
   enable_testing()
-  add_executable(pai_tests tests/test_main.cpp tests/core_tests.cpp tests/ai_tests.cpp tests/sim_tests.cpp)
+  add_executable(pai_tests tests/test_main.cpp tests/core_tests.cpp tests/ai_tests.cpp tests/sim_tests.cpp
+    transformer/tests/transformer_tests.cpp)
+  target_include_directories(pai_tests PRIVATE tests)
   target_link_libraries(pai_tests PRIVATE pai_core)
+  target_compile_definitions(pai_tests PRIVATE PAI_TRANSFORMER_TEST_DATA="${CMAKE_SOURCE_DIR}/transformer/tests")
   add_test(NAME pai_tests COMMAND pai_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif()
 

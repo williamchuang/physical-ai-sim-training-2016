@@ -33,6 +33,11 @@ enum class Demonstrator {
     Autopilot,  ///< a scripted expert presses the keys
 };
 
+enum class PolicyKind {
+    Mlp,          ///< the 2016 network: one frame -> sigmoid hidden layer -> 4 actions
+    Transformer,  ///< attention over image patches of the last few frames (weights from PyTorch)
+};
+
 enum class CameraView {
     Chase,  ///< behind the followed cube (yours if you drive one, otherwise the bot's)
     Agent,  ///< through the bot's own camera
@@ -67,6 +72,17 @@ struct GameConfig {
     /// autopilot still labels (DAgger), so the network also learns to recover.
     double daggerShare = 0.0;
     std::string policyFile = "models/policy.txt";
+    /// Which network drives the bots. The transformer is trained in PyTorch
+    /// (transformer/training) and only run here; training mode then records data for it.
+    PolicyKind policyKind = PolicyKind::Mlp;
+    std::string transformerFile = "transformer/models/transformer.txt";
+    int historyFrames = 4;  ///< camera frames the transformer sees (must match its weight file)
+    /// When set, every camera frame and the demonstrator's action are appended here
+    /// (format in transformer/training/data.py).
+    std::string recordFile;
+    /// Seconds of simulated time per rendered frame; 0 = real time. A fixed step lets
+    /// recording and evaluation run faster than real time.
+    double fixedFrameSeconds = 0.0;
     std::string startupScript = "scripts/startup.lua";
     double autosaveSeconds = 15.0;
 

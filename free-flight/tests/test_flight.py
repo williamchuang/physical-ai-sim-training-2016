@@ -83,6 +83,7 @@ def test_collected_coins_vanish():
     assert world.observe().shape == (1, 1, OBSERVATION_SIZE)
 
 
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

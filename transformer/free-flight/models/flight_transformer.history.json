@@ -1,0 +1,902 @@
+[
+ {
+  "episode": 0,
+  "loss": 5.2001496106386185,
+  "coins_per_bot_min": 0.75,
+  "surface_hits_per_bot_min": 6.984375,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 218.13469761833548,
+  "outside_fraction": 0.27890625
+ },
+ {
+  "episode": 1,
+  "loss": 1.8726853802800179,
+  "coins_per_bot_min": 0.5625,
+  "surface_hits_per_bot_min": 2.4375,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 246.59175713062285,
+  "outside_fraction": 0.140546875
+ },
+ {
+  "episode": 2,
+  "loss": 1.1288923993706703,
+  "coins_per_bot_min": 2.953125,
+  "surface_hits_per_bot_min": 0.28125,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 275.6631582736969,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 3,
+  "loss": 1.0630347691476345,
+  "coins_per_bot_min": 3.515625,
+  "surface_hits_per_bot_min": 0.140625,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 262.976704788208,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 4,
+  "loss": 1.0198161713778973,
+  "coins_per_bot_min": 5.484375,
+  "surface_hits_per_bot_min": 0.046875,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 274.48844971656797,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 5,
+  "loss": 0.9751966744661331,
+  "coins_per_bot_min": 5.578125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.4924341678619,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 6,
+  "loss": 0.9857107065618038,
+  "coins_per_bot_min": 5.90625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.21469206809996,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 7,
+  "loss": 0.9756609611213207,
+  "coins_per_bot_min": 6.609375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.40246350765227,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 8,
+  "loss": 0.9114549793303013,
+  "coins_per_bot_min": 5.53125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 272.60639967918394,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 9,
+  "loss": 0.9769163616001606,
+  "coins_per_bot_min": 6.328125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 272.338202381134,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 10,
+  "loss": 0.936762135475874,
+  "coins_per_bot_min": 6.75,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.588729095459,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 11,
+  "loss": 0.9957615584135056,
+  "coins_per_bot_min": 6.703125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 275.19138345718386,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 12,
+  "loss": 0.9783827848732471,
+  "coins_per_bot_min": 8.0625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.16692714691163,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 13,
+  "loss": 0.9450830779969692,
+  "coins_per_bot_min": 6.796875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.35664398670195,
+  "outside_fraction": 0.0002734375
+ },
+ {
+  "episode": 14,
+  "loss": 0.9945817403495312,
+  "coins_per_bot_min": 7.546875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.8278518676758,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 15,
+  "loss": 0.9416516833007336,
+  "coins_per_bot_min": 6.84375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.7872053861618,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 16,
+  "loss": 0.9174566194415092,
+  "coins_per_bot_min": 10.078125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.51375980377196,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 17,
+  "loss": 0.9154833368957043,
+  "coins_per_bot_min": 7.6875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 270.26765847206116,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 18,
+  "loss": 0.9892290979623795,
+  "coins_per_bot_min": 8.859375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.5281752109528,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 19,
+  "loss": 0.9465541504323483,
+  "coins_per_bot_min": 8.390625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.825261926651,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 20,
+  "loss": 0.9280083701014519,
+  "coins_per_bot_min": 8.625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 264.9938219308853,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 21,
+  "loss": 0.8632203452289104,
+  "coins_per_bot_min": 7.78125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 264.5669394493103,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 22,
+  "loss": 0.9323845356702805,
+  "coins_per_bot_min": 9.140625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.7494195699692,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 23,
+  "loss": 0.9699746109545231,
+  "coins_per_bot_min": 10.265625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 274.0310878515244,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 24,
+  "loss": 0.9453895315527916,
+  "coins_per_bot_min": 8.953125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 276.3186608552933,
+  "outside_fraction": 0.0019921875
+ },
+ {
+  "episode": 25,
+  "loss": 0.9512060098350048,
+  "coins_per_bot_min": 8.90625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.2013962984085,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 26,
+  "loss": 0.9567911028862,
+  "coins_per_bot_min": 8.765625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.3483008146286,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 27,
+  "loss": 0.9513080306351185,
+  "coins_per_bot_min": 8.625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.1959520339966,
+  "outside_fraction": 0.000625
+ },
+ {
+  "episode": 28,
+  "loss": 0.9528836123645306,
+  "coins_per_bot_min": 9.5625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 271.6919956922531,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 29,
+  "loss": 0.9718579724431038,
+  "coins_per_bot_min": 9.515625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.91986417770386,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 30,
+  "loss": 0.9586318172514439,
+  "coins_per_bot_min": 10.453125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.4390737056732,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 31,
+  "loss": 0.9710363745689392,
+  "coins_per_bot_min": 10.546875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.2873571157455,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 32,
+  "loss": 0.9618675485253334,
+  "coins_per_bot_min": 10.125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 272.2366937875748,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 33,
+  "loss": 0.9695048220455647,
+  "coins_per_bot_min": 9.328125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.76200273036955,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 34,
+  "loss": 0.937583427876234,
+  "coins_per_bot_min": 10.546875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 270.212548828125,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 35,
+  "loss": 0.9515198804438114,
+  "coins_per_bot_min": 10.640625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.3610901117325,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 36,
+  "loss": 0.9575994536280632,
+  "coins_per_bot_min": 10.875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 265.06633176803587,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 37,
+  "loss": 0.9626573957502842,
+  "coins_per_bot_min": 10.59375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 265.93052020072935,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 38,
+  "loss": 0.9767158031463623,
+  "coins_per_bot_min": 11.34375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 262.636589717865,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 39,
+  "loss": 0.9322659596800804,
+  "coins_per_bot_min": 10.875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.5894611597061,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 40,
+  "loss": 0.9562341123819351,
+  "coins_per_bot_min": 10.453125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.25533483028414,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 41,
+  "loss": 0.9757600724697113,
+  "coins_per_bot_min": 10.96875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.68692593574525,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 42,
+  "loss": 0.9147331081330776,
+  "coins_per_bot_min": 9.5625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.31353158950805,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 43,
+  "loss": 1.0215037055313587,
+  "coins_per_bot_min": 11.109375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 270.6868350505829,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 44,
+  "loss": 0.9470554627478123,
+  "coins_per_bot_min": 10.734375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.5966332435608,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 45,
+  "loss": 0.9609606936573982,
+  "coins_per_bot_min": 11.8125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.80813019275666,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 46,
+  "loss": 0.9753917567431927,
+  "coins_per_bot_min": 10.21875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.5355890750885,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 47,
+  "loss": 0.9872569441795349,
+  "coins_per_bot_min": 11.25,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 270.3119086265564,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 48,
+  "loss": 0.9761574566364288,
+  "coins_per_bot_min": 11.71875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 265.19929959774015,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 49,
+  "loss": 0.9927997142076492,
+  "coins_per_bot_min": 10.734375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 271.8258405685425,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 50,
+  "loss": 0.974448274821043,
+  "coins_per_bot_min": 10.828125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 265.514589715004,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 51,
+  "loss": 0.9587670788168907,
+  "coins_per_bot_min": 11.25,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.7273737192154,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 52,
+  "loss": 0.9401210807263851,
+  "coins_per_bot_min": 10.640625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.1200822353363,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 53,
+  "loss": 0.9180303737521172,
+  "coins_per_bot_min": 10.78125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.1690552711487,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 54,
+  "loss": 0.9454374127089977,
+  "coins_per_bot_min": 12.0,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.29018907547,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 55,
+  "loss": 0.9180665500462055,
+  "coins_per_bot_min": 12.28125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.27681970596313,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 56,
+  "loss": 0.9516349621117115,
+  "coins_per_bot_min": 11.296875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.5320673942566,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 57,
+  "loss": 0.9328632764518261,
+  "coins_per_bot_min": 10.40625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.4260092973709,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 58,
+  "loss": 1.0052173770964146,
+  "coins_per_bot_min": 13.078125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.8548796892166,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 59,
+  "loss": 0.9576652981340885,
+  "coins_per_bot_min": 10.96875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 261.1204674720764,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 60,
+  "loss": 0.9574037902057171,
+  "coins_per_bot_min": 11.390625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 262.61688871383666,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 61,
+  "loss": 0.9521304406225681,
+  "coins_per_bot_min": 10.125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.2101451635361,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 62,
+  "loss": 0.8972706496715546,
+  "coins_per_bot_min": 11.015625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.1519171476364,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 63,
+  "loss": 0.926389779895544,
+  "coins_per_bot_min": 10.6875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 262.90502643585205,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 64,
+  "loss": 1.0341694466769695,
+  "coins_per_bot_min": 11.53125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.0720263004303,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 65,
+  "loss": 0.9470619596540928,
+  "coins_per_bot_min": 10.875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.13378009796145,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 66,
+  "loss": 0.9549759961664677,
+  "coins_per_bot_min": 11.671875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.87695786952975,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 67,
+  "loss": 0.9625957421958447,
+  "coins_per_bot_min": 10.546875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 271.52544836997987,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 68,
+  "loss": 0.9865866079926491,
+  "coins_per_bot_min": 11.765625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 273.04587881565095,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 69,
+  "loss": 0.9946901202201843,
+  "coins_per_bot_min": 10.921875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.0225835084915,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 70,
+  "loss": 0.9704736024141312,
+  "coins_per_bot_min": 10.921875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 265.8815307378769,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 71,
+  "loss": 0.932960756123066,
+  "coins_per_bot_min": 10.171875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.6277314662933,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 72,
+  "loss": 0.9571479298174381,
+  "coins_per_bot_min": 10.6875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 272.72652435302734,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 73,
+  "loss": 0.9683534801006317,
+  "coins_per_bot_min": 12.0,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.97654314041137,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 74,
+  "loss": 0.9617237709462643,
+  "coins_per_bot_min": 11.109375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.0045999288559,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 75,
+  "loss": 0.9772375710308552,
+  "coins_per_bot_min": 10.125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 261.3994745016098,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 76,
+  "loss": 1.005747176706791,
+  "coins_per_bot_min": 11.8125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.05863082408905,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 77,
+  "loss": 0.94664416462183,
+  "coins_per_bot_min": 10.5,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.08700301647184,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 78,
+  "loss": 0.9372951164841652,
+  "coins_per_bot_min": 12.0,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.0727947473526,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 79,
+  "loss": 0.9527716040611267,
+  "coins_per_bot_min": 11.015625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.1275067806244,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 80,
+  "loss": 0.9586917012929916,
+  "coins_per_bot_min": 10.078125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 264.3175591945648,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 81,
+  "loss": 0.9580803588032722,
+  "coins_per_bot_min": 11.109375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.7505026817322,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 82,
+  "loss": 0.9474171251058578,
+  "coins_per_bot_min": 10.40625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.6922111749649,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 83,
+  "loss": 0.955876998603344,
+  "coins_per_bot_min": 10.78125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.4855962514877,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 84,
+  "loss": 0.9001118950545788,
+  "coins_per_bot_min": 11.0625,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 270.54171307086943,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 85,
+  "loss": 0.9203250333666801,
+  "coins_per_bot_min": 11.578125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.49415507316587,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 86,
+  "loss": 0.9851791486144066,
+  "coins_per_bot_min": 11.578125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.73085849285127,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 87,
+  "loss": 0.9223755300045013,
+  "coins_per_bot_min": 11.484375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 269.3253893136978,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 88,
+  "loss": 0.9228297173976898,
+  "coins_per_bot_min": 11.578125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.45509746074674,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 89,
+  "loss": 1.0170849934220314,
+  "coins_per_bot_min": 10.3125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.7334495544434,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 90,
+  "loss": 1.0178724452853203,
+  "coins_per_bot_min": 11.484375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.22496993541716,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 91,
+  "loss": 0.932334590703249,
+  "coins_per_bot_min": 10.03125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 261.01613795757294,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 92,
+  "loss": 0.9711207300424576,
+  "coins_per_bot_min": 12.1875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 272.5027418375015,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 93,
+  "loss": 0.962372075766325,
+  "coins_per_bot_min": 12.46875,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 268.65817687511446,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 94,
+  "loss": 0.9416277408599854,
+  "coins_per_bot_min": 11.859375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 266.19536743164065,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 95,
+  "loss": 0.975387055426836,
+  "coins_per_bot_min": 9.9375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 265.5161167383194,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 96,
+  "loss": 0.9330743476748466,
+  "coins_per_bot_min": 9.9375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 267.84146308898926,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 97,
+  "loss": 0.9646362736821175,
+  "coins_per_bot_min": 11.953125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 272.03717439174653,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 98,
+  "loss": 0.9559238590300083,
+  "coins_per_bot_min": 12.375,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 264.5893510580063,
+  "outside_fraction": 0.0
+ },
+ {
+  "episode": 99,
+  "loss": 0.9608735553920269,
+  "coins_per_bot_min": 12.328125,
+  "surface_hits_per_bot_min": 0.0,
+  "bot_hits_per_bot_min": 0.0,
+  "speed_along_track": 263.3671095132828,
+  "outside_fraction": 0.0
+ }
+]

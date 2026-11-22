@@ -112,6 +112,17 @@ GameConfig GameConfig::from(const KeyValueFile& f) {
     c.batchSize = std::max(1, f.getInt("batch_size", c.batchSize));
     c.replayCapacity = std::max(c.batchSize, f.getInt("replay_capacity", c.replayCapacity));
     c.policyFile = f.getString("policy_file", c.policyFile);
+    const std::string kind = lower(f.getString("policy_kind", "mlp"));
+    if (kind == "mlp")
+        c.policyKind = PolicyKind::Mlp;
+    else if (kind == "transformer")
+        c.policyKind = PolicyKind::Transformer;
+    else
+        throw std::runtime_error("config: policy_kind must be mlp or transformer, not " + kind);
+    c.transformerFile = f.getString("transformer_file", c.transformerFile);
+    c.historyFrames = std::clamp(f.getInt("history_frames", c.historyFrames), 1, 16);
+    c.recordFile = f.getString("record_file", c.recordFile);
+    c.fixedFrameSeconds = std::clamp(f.getDouble("fixed_frame_seconds", c.fixedFrameSeconds), 0.0, 0.1);
     c.startupScript = f.getString("startup_script", c.startupScript);
     c.autosaveSeconds = f.getDouble("autosave_seconds", c.autosaveSeconds);
     c.seed = static_cast<unsigned>(f.getInt("seed", static_cast<int>(c.seed)));

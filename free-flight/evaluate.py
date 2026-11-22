@@ -13,13 +13,14 @@ from pathlib import Path
 
 import torch
 
-from policy import FlightPolicy
+from policy import FlightPolicy, make_policy
 from world import World, WorldConfig
 
 
 def load_policy(path: Path) -> FlightPolicy:
-    policy = FlightPolicy()
-    policy.load_state_dict(torch.load(path, map_location="cpu", weights_only=True)["state_dict"])
+    state = torch.load(path, map_location="cpu", weights_only=True)
+    policy = make_policy(state.get("kind", "mlp"), state.get("memory", 8))
+    policy.load_state_dict(state["state_dict"])
     policy.eval()
     return policy
 
@@ -28,6 +29,8 @@ def load_policy(path: Path) -> FlightPolicy:
 def measure(policy, seconds: float = 60.0, worlds: int = 32, bots: int = 4, seed: int = 7) -> dict:
     config = WorldConfig(worlds=worlds, bots=bots)
     world = World(config, seed=seed)
+    if hasattr(policy, "reset"):
+        policy.reset()
     for _ in range(int(seconds / config.dt)):
         world.step(policy(world.observe()))
     s = world.stats

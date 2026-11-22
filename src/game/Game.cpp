@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdint>
+#include <filesystem>
 
 #include "sim/Autopilot.h"
 
@@ -33,7 +35,32 @@ Game::Game(const GameConfig& config, BodySizes sizes)
     } else {
         policyStatus_ = "untrained policy (" + error + ")";
     }
-    if (config_.mode == Mode::Train) {
+    if (config_.policyKind == PolicyKind::Transformer) {
+        std::string why;
+        transformer_ = loadTransformer(config_.transformerFile, &why);
+        if (transformer_ && (transformer_->shape().frames != static_cast<std::size_t>(config_.historyFrames) ||
+                             transformer_->shape().height != static_cast<std::size_t>(config_.sensorHeight) ||
+                             transformer_->shape().width != static_cast<std::size_t>(config_.sensorWidth))) {
+            transformer_.reset();
+            why = "its frames or image size differ from the configuration";
+        }
+        policyStatus_ = transformer_ ? "transformer loaded from " +
+                                           std::filesystem::path(config_.transformerFile).filename().string()
+                                     : "no transformer (" + why + "), using the MLP";
+    }
+    if (!config_.recordFile.empty()) {
+        const std::filesystem::path folder = std::filesystem::path(config_.recordFile).parent_path();
+        std::error_code ignored;
+        if (!folder.empty()) std::filesystem::create_directories(folder, ignored);
+        recording_.open(config_.recordFile, std::ios::binary | std::ios::app);
+        if (!recording_) policyStatus_ += "; cannot record to " + config_.recordFile;
+        if (recording_ && recording_.tellp() == 0) {
+            const std::int32_t header[3] = {0x31434552 /* "REC1" */, config_.sensorWidth, config_.sensorHeight};
+            recording_.write(reinterpret_cast<const char*>(header), sizeof header);
+        }
+    }
+    // The transformer cannot learn in the game; with it, training mode only records.
+    if (config_.mode == Mode::Train && !transformer_) {
         ImitationLearner::Settings s;
         s.learningRate = static_cast<float>(config_.learningRate);
         s.batchSize = static_cast<std::size_t>(config_.batchSize);
@@ -73,6 +100,10 @@ void Game::populate() {
         const Driver d = world_.cars()[i].driver();
         if (d == Driver::Neural || (d == Driver::Human && config_.mode == Mode::Train)) sensingCars_.push_back(i);
     }
+    histories_.assign(sensingCars_.size(),
+                      std::vector<float>(static_cast<std::size_t>(config_.historyFrames * config_.sensorPixels())));
+    historyStarted_.assign(sensingCars_.size(), false);
+    ++episode_;
     decisionTimer_ = 0.0;
     roundOver_ = false;
 }
@@ -103,21 +134,63 @@ std::optional<std::size_t> Game::firstBot() const {
     return std::nullopt;
 }
 
+void Game::remember(std::size_t slot) {
+    std::vector<float>& h = histories_[slot];
+    const std::size_t n = observation_.size();
+    if (!historyStarted_[slot]) {
+        // A new round starts with the first frame repeated (PyTorch pads the same way).
+        for (std::size_t f = 0; f < h.size(); f += n)
+            std::copy(observation_.begin(), observation_.end(), h.begin() + f);
+        historyStarted_[slot] = true;
+    } else {
+        std::copy(h.begin() + n, h.end(), h.begin());
+        std::copy(observation_.begin(), observation_.end(), h.end() - n);
+    }
+}
+
+int Game::act(std::size_t slot) const {
+    return transformer_ ? transformer_->predict(histories_[slot]) : policy_.predict(observation_);
+}
+
+void Game::record(std::size_t slot, std::size_t car, int label, bool policyDrove) {
+    if (!recording_) return;
+    const std::int32_t head[3] = {episode_, static_cast<std::int32_t>(slot), label};
+    recording_.write(reinterpret_cast<const char*>(head), sizeof head);
+    const std::uint8_t flags[2] = {static_cast<std::uint8_t>(policyDrove),
+                                   static_cast<std::uint8_t>(world_.cars()[car].driver() == Driver::Neural)};
+    recording_.write(reinterpret_cast<const char*>(flags), sizeof flags);
+    std::vector<std::uint8_t> pixels(observation_.size());
+    for (std::size_t i = 0; i < pixels.size(); ++i)
+        pixels[i] = static_cast<std::uint8_t>(std::lround(std::clamp(observation_[i], 0.0f, 1.0f) * 255.0f));
+    recording_.write(reinterpret_cast<const char*>(pixels.data()), static_cast<std::streamsize>(pixels.size()));
+}
+
 void Game::decide(Perception* perception, const DriveInput& humanInput) {
     if (!perception) return;
-    for (std::size_t index : sensingCars_) {
+    for (std::size_t slot = 0; slot < sensingCars_.size(); ++slot) {
+        const std::size_t index = sensingCars_[slot];
         if (!perception->observe(index, observation_)) continue;
+        remember(slot);
         Car& car = world_.cars()[index];
         if (car.driver() == Driver::Neural) {
-            car.heldInput = DriveInput::from(static_cast<Action>(policy_.predict(observation_)));
-        } else if (learner_) {
+            car.heldInput = DriveInput::from(static_cast<Action>(act(slot)));
+            // The autopilot's choice is recorded as a reference label; it does not drive.
+            if (recording_) {
+                const auto reference = autopilot(world_, index).toAction();
+                record(slot, index, reference ? static_cast<int>(*reference) : -1, true);
+            }
+        } else {
+            const auto action = humanInput.toAction();
             // A frame with no key pressed carries no label, so it is not learned from.
-            if (auto action = humanInput.toAction()) learner_->record(observation_, static_cast<int>(*action));
+            if (learner_ && action) learner_->record(observation_, static_cast<int>(*action));
+            if (recording_) record(slot, index, action ? static_cast<int>(*action) : -1, policyDrives_);
             // DAgger: until the next decision, the network may hold the wheel.
-            policyDrives_ = config_.demonstrator == Demonstrator::Autopilot && daggerCoin_(rng_) < config_.daggerShare;
-            if (policyDrives_) car.heldInput = DriveInput::from(static_cast<Action>(policy_.predict(observation_)));
+            policyDrives_ = config_.mode == Mode::Train && config_.demonstrator == Demonstrator::Autopilot &&
+                            daggerCoin_(rng_) < config_.daggerShare;
+            if (policyDrives_) car.heldInput = DriveInput::from(static_cast<Action>(act(slot)));
         }
     }
+    if (recording_) recording_.flush();  // the run may be stopped at any moment
 }
 
 void Game::update(double dt, const DriveInput& keys, Perception* perception) {

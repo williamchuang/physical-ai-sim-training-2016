@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <fstream>
 #include <memory>
 #include <optional>
 #include <random>
@@ -9,6 +10,7 @@
 
 #include "ai/ImitationLearner.h"
 #include "ai/Mlp.h"
+#include "Transformer.h"  // transformer/cpp
 #include "core/Config.h"
 #include "core/GameClock.h"
 #include "sim/World.h"
@@ -67,6 +69,11 @@ public:
 private:
     void populate();
     void decide(Perception* perception, const DriveInput& humanInput);
+    /// Adds the newest camera frame to sensing slot `slot`'s history.
+    void remember(std::size_t slot);
+    /// The configured network's action for sensing slot `slot`.
+    int act(std::size_t slot) const;
+    void record(std::size_t slot, std::size_t car, int label, bool policyDrove);
 
     GameConfig config_;
     BodySizes sizes_;
@@ -74,6 +81,12 @@ private:
     GameClock clock_;
     Mlp policy_;
     std::unique_ptr<ImitationLearner> learner_;
+    std::unique_ptr<Transformer> transformer_;
+    /// Per sensing car: the last historyFrames camera frames, oldest first.
+    std::vector<std::vector<float>> histories_;
+    std::vector<bool> historyStarted_;
+    std::ofstream recording_;
+    int episode_ = -1;
     std::optional<std::size_t> humanCar_;
     std::vector<std::size_t> sensingCars_;
     std::vector<float> observation_;

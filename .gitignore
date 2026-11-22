@@ -9,3 +9,5 @@ models/*
 __pycache__/
 .pytest_cache/
 *.checkpoint.pt
+transformer/recordings/
+!models/README.md

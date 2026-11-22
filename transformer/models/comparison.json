@@ -1,0 +1,49 @@
+{
+ "note": "Rendered game, demo mode, one bot, 74 coins that do not come back, 90 s rounds, fixed step of 1/30 s. Coins collected per seed.",
+ "results": {
+  "2016-style MLP, learned in the game (models/policy.txt), decisions every 0.1 s": {
+   "per_seed": {
+    "101": 29,
+    "202": 19,
+    "303": 24,
+    "404": 19,
+    "505": 21,
+    "606": 19
+   },
+   "mean": 21.83
+  },
+  "same MLP, decisions every 0.05 s": {
+   "per_seed": {
+    "101": 12,
+    "202": 19,
+    "303": 15,
+    "404": 7,
+    "505": 28,
+    "606": 15
+   },
+   "mean": 16.0
+  },
+  "MLP trained in PyTorch on the recordings (models/policy-same-data.txt), 0.05 s": {
+   "per_seed": {
+    "101": 33,
+    "202": 41,
+    "303": 33,
+    "404": 34,
+    "505": 35,
+    "606": 30
+   },
+   "mean": 34.33
+  },
+  "transformer trained in PyTorch on the recordings (models/transformer.txt), 0.05 s": {
+   "per_seed": {
+    "101": 36,
+    "202": 36,
+    "303": 37,
+    "404": 36,
+    "505": 39,
+    "606": 36
+   },
+   "mean": 36.67
+  }
+ }
+}
